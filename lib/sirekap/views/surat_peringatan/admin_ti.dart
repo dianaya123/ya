@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AdminTI extends StatefulWidget {
-  const AdminTI({super.key});
+class Admin_TI extends StatefulWidget {
+  const Admin_TI({super.key});
 
   @override
-  State<AdminTI> createState() => _AdminTIState();
+  State<Admin_TI> createState() => _Admin_TIState();
 }
 
-class _AdminTIState extends State<AdminTI> {
+class _Admin_TIState extends State<Admin_TI> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
