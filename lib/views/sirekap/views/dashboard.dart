@@ -1,4 +1,4 @@
-import 'package:academix_polnep/sirekap/views/revisi/revisi.dart';
+import 'package:academix_polnep/views/sirekap/views/revisi/revisi.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {

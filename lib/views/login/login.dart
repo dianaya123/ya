@@ -1,6 +1,9 @@
+import 'package:academix_polnep/views/helper/styleHelper.dart';
 import 'package:academix_polnep/views/login/forgetPassword.dart';
+import 'package:academix_polnep/views/login/pilihan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,37 +16,10 @@ class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
   bool? checkValue = false;
 
-// bakground pake ini
-  Gradient gradient = const LinearGradient(
-      colors: [
-        Color(0xFF158AD4),
-        Color(0xFF39EADD)
-      ],
-      begin: FractionalOffset(0.0, 0.0),
-      end: FractionalOffset(0.0, 1.0),
-      stops: [
-        0.0,
-        1.0
-      ],
-      tileMode: TileMode.clamp);
-// bakground pake ini
-  Gradient btnGradient = const LinearGradient(
-      colors: [
-        Color(0xFF158AD4),
-        Color(0xFF39EADD)
-      ],
-      begin: FractionalOffset(0.0, 0.0),
-      end: FractionalOffset(0.0, 1.0),
-      stops: [
-        0.0,
-        1.0
-      ],
-      tileMode: TileMode.clamp);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient: gradient),
+      decoration: BoxDecoration(gradient: bgGradient),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Form(
@@ -54,26 +30,26 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Align(
                       child: Image.asset(
-                    "assets/logo.png",
+                    "assets/images/logo.png",
                     scale: 15,
                   )),
                   const Padding(padding: EdgeInsets.all(20)),
-                  const Text(
+                  Text(
                     "Welcome !",
-                    style: TextStyle(fontSize: 30, color: Colors.white),
+                    style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 30, color: Colors.white)),
                   ),
                   const Padding(padding: EdgeInsets.all(5)),
-                  const Text(
+                  Text(
                     "Login To Your Account",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)),
                   ),
                   const Padding(padding: EdgeInsets.all(30)),
                   SizedBox(
-                    height: 50,
                     width: 300,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+                        isDense: true,
                         hintText: "NIM/NIP",
                         filled: true,
                         fillColor: Colors.white,
@@ -90,11 +66,11 @@ class _LoginState extends State<Login> {
                   ),
                   const Padding(padding: EdgeInsets.all(15)),
                   SizedBox(
-                      height: 50,
                       width: 300,
                       child: TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
+                          isDense: true,
                           hintText: "PASSWORD",
                           filled: true,
                           fillColor: Colors.white,
@@ -102,7 +78,7 @@ class _LoginState extends State<Login> {
                           focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.white, width: 2.0), borderRadius: BorderRadius.circular(10)),
                         ),
                         validator: (value) {
-                          if (!value!.contains(RegExp(r'(^[A-Za-z]+$)'))) {
+                          if (!RegExp(r'^(?=.*[A-Z]).+$').hasMatch(value!)) {
                             return "password harus ada huruf kapital";
                           }
                           return null;
@@ -110,15 +86,15 @@ class _LoginState extends State<Login> {
                       )),
                   const Padding(padding: EdgeInsets.all(10)),
                   Align(
-                    alignment: const Alignment(0.7, 0.7),
+                    alignment: const Alignment(0, 0),
                     child: RichText(
                         text: TextSpan(
-                            text: "Forget Password",
-                            style: const TextStyle(color: Colors.white, fontSize: 15),
+                            text: "Forgot your Password?",
+                            style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.white, fontSize: 15)),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return const Forgetpassword();
+                                  return const ForgetPassword();
                                 }));
                               })),
                   ),
@@ -127,16 +103,20 @@ class _LoginState extends State<Login> {
                     height: 45,
                     width: 200,
                     decoration: BoxDecoration(gradient: btnGradient, borderRadius: BorderRadius.circular(20), boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.1), spreadRadius: 3, blurRadius: 2, offset: const Offset(0, 3))
+                      boxShadow
                     ]),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent),
-                      child: const Text(
+                      child: Text(
                         "Login",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 20, color: Colors.white)),
                       ),
                       onPressed: () {
-                        if (_formkey.currentState!.validate()) {}
+                        if (_formkey.currentState!.validate()) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                            return const Pilihan();
+                          }));
+                        }
                       },
                     ),
                   )

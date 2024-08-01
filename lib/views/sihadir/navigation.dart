@@ -1,4 +1,5 @@
-import 'package:academix_polnep/views/login/login.dart';
+import 'package:academix_polnep/views/helper/styleHelper.dart';
+import 'package:academix_polnep/views/sihadir/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -9,19 +10,15 @@ class Navbar extends StatefulWidget {
   State<Navbar> createState() => _NavbarState();
 }
 
-// Jalankan "flutter pub add convex_bottom_bar" sebelum menjalankan aplikasi
-// Tambahin Page Disini
-// halaman kalian link an disini
-// panggil disini - eja
 class _NavbarState extends State<Navbar> {
   int _selectedNavbar = 0;
   final _pages = [
     // contoh
-    const Login(), // home
-    const Text("text"), // presensi
-    const Text("text"), // kalender
-    const Text("text"), // kelas
-    const Text("text"), // laporan
+    const Dashboard(), // home
+    const Text("Presensi"), // presensi
+    const Text("Kalender Akademik"), // kalender
+    const Text("Kelas"), // kelas
+    const Text("Laporan"), // laporan
   ];
 
   void changeSelectedNavBar(int index) {
@@ -33,19 +30,7 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Color(0xFF158AD4),
-                Color(0xFF39EADD)
-              ],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(0.0, 1.0),
-              stops: [
-                0.0,
-                1.0
-              ],
-              tileMode: TileMode.clamp)),
+      decoration: BoxDecoration(gradient: bgGradient),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Form(

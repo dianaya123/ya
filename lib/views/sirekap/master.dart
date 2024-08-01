@@ -1,4 +1,4 @@
-import 'package:academix_polnep/sirekap/views/dashboard.dart';
+import 'package:academix_polnep/views/sirekap/views/dashboard.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
