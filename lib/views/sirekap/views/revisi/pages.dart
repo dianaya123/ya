@@ -18,6 +18,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
   final List<String> _option = ['izin', 'sakit', 'alpha'];
 
   bool checked = false;
+  bool uploud = false;
 
   selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -26,6 +27,9 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
     );
 
     if (result != null) {
+      setState(() {
+        uploud = !false;
+      });
       print('file picked : ${result.files.single.path}');
     }
   }
@@ -77,37 +81,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                     radius: const Radius.circular(20),
                     color: Colors.black,
                     padding: const EdgeInsets.all(10),
-                    child: Container(
-                      // color: Colors.white,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 3),
-                      child: TextButton(
-                        onPressed: () {
-                          selectFile();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.cloud_upload,
-                              // color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              'Upload File',
-                              // style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    child: uploud == false ? UploudFile() : DoneUploud(),
                   ),
                 ),
                 const SizedBox(
@@ -172,7 +146,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                           Color(0xff158AD4),
                           Color(0xFF39EADD),
                         ]),
-                    borderRadius: BorderRadius.circular(10),  
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   height: 50,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -188,6 +162,61 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Row DoneUploud() {
+    return Row(
+      children: [
+        Icon(
+          Icons.edit_document,
+          size: 40,
+        ),
+        // TextFormField(
+        //   readOnly: true,
+        //   // controller: ,
+        //   decoration: const InputDecoration(
+        //     hintText: 'Upload File',
+        //     hintStyle: TextStyle(color: Colors.grey),
+        //   ),
+        // )
+        const SizedBox(
+          width: 20,
+        ),
+        Text("File Sudah Teruploud")
+      ],
+    );
+  }
+
+  Container UploudFile() {
+    return Container(
+      // color: Colors.white,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+      child: TextButton(
+        onPressed: () {
+          selectFile();
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.cloud_upload,
+              // color: Colors.grey,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            const Text(
+              'Upload File',
+              // style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
       ),
     );
   }
