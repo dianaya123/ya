@@ -1,5 +1,7 @@
 pasang paket-paket ini sebelum menjalankan aplikasi
 
+-> flutter pub get -> untuk mengambil semua
+
 -> flutter pub add convex_bottom_bar
 -> flutter pub add google_fonts (font poppins)
 -> update outdated dependencies (flutter pub upgrade --major-versions)
@@ -8,4 +10,7 @@ todo
 
 #ganti font (udah)
 # pasang backend and auth
+
+
+
 
