@@ -36,22 +36,7 @@ class Dashboard extends StatelessWidget {
                                 builder: (context) => PageList()));
                       },
                       child: const Text(
-                        'List Button',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ),
-                Container(
-                  margin: EdgeInsets.all(20),
-                  color: Colors.red,
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PagesUpdated()));
-                      },
-                      child: const Text(
-                        'Updated Button ',
+                        'Mahasiswa Pages Button',
                         style: TextStyle(color: Colors.white),
                       )),
                 ),
@@ -64,7 +49,7 @@ class Dashboard extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => Dosen()));
                       },
                       child: const Text(
-                        'Updated Button ',
+                        'Dosen Pages Button ',
                         style: TextStyle(color: Colors.white),
                       )),
                 ),
