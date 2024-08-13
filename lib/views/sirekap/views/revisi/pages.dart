@@ -1,9 +1,7 @@
-import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PagesFormRevisi extends StatefulWidget {
@@ -90,7 +88,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                         onPressed: () {
                           selectFile();
                         },
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
@@ -100,7 +98,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                             SizedBox(
                               width: 10,
                             ),
-                            const Text(
+                            Text(
                               'Upload File',
                               // style: TextStyle(color: Colors.grey),
                             ),
@@ -152,7 +150,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                         });
                       },
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Text(
                         "Saya Menyatakan bahwa surat ini dibuat dengan sebenar-benarnya, saya siap menerima sanksi yang ada jika terdapat kecurangan",
                       ),
@@ -165,7 +163,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
@@ -206,13 +204,13 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
           width: 20,
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            color: Color(0xffe7e7e7),
+            color: const Color(0xffe7e7e7),
             borderRadius: BorderRadius.circular(30),
           ),
           child: DropdownButton(
-              hint: Text("Status"),
+              hint: const Text("Status"),
               value: _selectedValue,
               items: _option
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -228,7 +226,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
   }
 
   Column persyaratan() {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Jenis File yang Diterima :"),

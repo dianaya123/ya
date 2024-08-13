@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:academix_polnep/backend/models/users.dart';
 
 class UserService {
-  final String apiUrl = "http://10.0.2.2:8000/login";
+  final String apiUrl = "https://academix.risetmaster.my.id/public/api/login";
 
-  Future<users> loginUser(String nomorInduk, String password) async {
+  Future<Users> loginUser(String nomorInduk, String password) async {
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -19,23 +19,23 @@ class UserService {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      return users.fromJson(responseData);
+      return Users.fromJson(responseData);
     } else {
-      throw Exception('Failed to login');
+      throw Exception('Failed to login: ${response.body}');
     }
   }
 
-  Future<List<users>> fetchUser() async {
+  Future<Users> fetchUser() async {
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((user) => users.fromJson(user)).toList();
+      final jsonResponse = json.decode(response.body);
+      return Users.fromJson(jsonResponse);
     } else {
-      throw Exception('Failed to load user');
+      throw Exception('Failed to fetch user: ${response.body}');
     }
   }
 
-  Future<users> createUser(users user) async {
+  Future<Users> createUser(Users user) async {
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {
@@ -43,14 +43,15 @@ class UserService {
       },
       body: jsonEncode(user.toJson()),
     );
+
     if (response.statusCode == 201) {
-      return users.fromJson(json.decode(response.body));
+      return Users.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to create user');
+      throw Exception('Failed to create user: ${response.body}');
     }
   }
 
-  Future<users> updateUser(int id, users user) async {
+  Future<Users> updateUser(int id, Users user) async {
     final response = await http.put(
       Uri.parse('$apiUrl/$id'),
       headers: {
@@ -58,17 +59,19 @@ class UserService {
       },
       body: jsonEncode(user.toJson()),
     );
+
     if (response.statusCode == 200) {
-      return users.fromJson(json.decode(response.body));
+      return Users.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to update user');
+      throw Exception('Failed to update user: ${response.body}');
     }
   }
 
   Future<void> deleteUser(int id) async {
     final response = await http.delete(Uri.parse('$apiUrl/$id'));
+
     if (response.statusCode != 204) {
-      throw Exception('Failed to delete user');
+      throw Exception('Failed to delete user: ${response.body}');
     }
   }
 }

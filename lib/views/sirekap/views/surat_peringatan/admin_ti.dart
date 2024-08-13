@@ -39,7 +39,7 @@ class _Admin_TIState extends State<Admin_TI> {
                   Expanded(
                     child: Container(
                       color: Colors.red,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Column 1',
                           style: TextStyle(
@@ -55,7 +55,7 @@ class _Admin_TIState extends State<Admin_TI> {
                   Expanded(
                     child: Container(
                       color: Colors.blue,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Column 2',
                           style: TextStyle(

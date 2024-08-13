@@ -4,6 +4,8 @@ import 'dart:math';
 import 'dart:async';
 
 class KelasDosen extends StatelessWidget {
+  const KelasDosen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,12 +14,14 @@ class KelasDosen extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -57,7 +61,7 @@ class _MainPageState extends State<MainPage> {
     });
 
     _timer?.cancel();
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       String newToken = String.fromCharCodes(
           Iterable.generate(5, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
       setState(() {
@@ -84,7 +88,7 @@ class _MainPageState extends State<MainPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               // Menampilkan tabel jadwal mingguan
               WeeklyScheduleTable(
                 schedule: _weeklySchedule,
@@ -113,7 +117,7 @@ class WeeklyScheduleTable extends StatefulWidget {
   final Function(List<Map<String, String>>) onEditWeeklySchedule;
   final Function(String) onGenerateToken;
 
-  WeeklyScheduleTable({
+  const WeeklyScheduleTable({super.key, 
     required this.schedule,
     required this.onEditWeeklySchedule,
     required this.onGenerateToken,
@@ -128,7 +132,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
   void _addClass() async {
     final newSchedule = await showDialog<Map<String, String>>(
       context: context,
-      builder: (context) => EditScheduleDialog(
+      builder: (context) => const EditScheduleDialog(
         schedule: {'mata_kuliah': '', 'ruang': '', 'hari': '', 'tanggal': '', 'jam': ''},
       ),
     );
@@ -184,19 +188,19 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
               widget.onGenerateToken(widget.schedule[index]['mata_kuliah']!);
               Navigator.of(context).pop();
             },
-            child: Text('Start'),
+            child: const Text('Start'),
           ),
           TextButton(
             onPressed: () => _editClass(index),
-            child: Text('Edit'),
+            child: const Text('Edit'),
           ),
           TextButton(
             onPressed: () => _deleteClass(index),
-            child: Text('Remove'),
+            child: const Text('Remove'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       ),
@@ -215,7 +219,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'JADWAL KELAS ANDA MINGGU INI',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
             ),
@@ -223,7 +227,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columnSpacing: 16.0,
-                columns: [
+                columns: const [
                   DataColumn(
                       label: Text('MATA KULIAH',
                           style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold))),
@@ -239,10 +243,10 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
                       DataCell(
                         InkWell(
                           onTap: () => _showDetailsDialog(index),
-                          child: Text(scheduleItem['mata_kuliah']!, style: TextStyle(fontSize: 12.0)),
+                          child: Text(scheduleItem['mata_kuliah']!, style: const TextStyle(fontSize: 12.0)),
                         ),
                       ),
-                      DataCell(Text(scheduleItem['hari']!, style: TextStyle(fontSize: 12.0))),
+                      DataCell(Text(scheduleItem['hari']!, style: const TextStyle(fontSize: 12.0))),
                     ],
                   );
                 }).toList(),
@@ -259,7 +263,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
 class EditScheduleDialog extends StatefulWidget {
   final Map<String, String> schedule;
 
-  EditScheduleDialog({required this.schedule});
+  const EditScheduleDialog({super.key, required this.schedule});
 
   @override
   _EditScheduleDialogState createState() => _EditScheduleDialogState();
@@ -288,29 +292,29 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Edit Schedule'),
+      title: const Text('Edit Schedule'),
       content: SingleChildScrollView(
         child: Column(
           children: [
             TextField(
               controller: _mataKuliahController,
-              decoration: InputDecoration(labelText: 'Mata Kuliah'),
+              decoration: const InputDecoration(labelText: 'Mata Kuliah'),
             ),
             TextField(
               controller: _ruangController,
-              decoration: InputDecoration(labelText: 'Ruang'),
+              decoration: const InputDecoration(labelText: 'Ruang'),
             ),
             TextField(
               controller: _hariController,
-              decoration: InputDecoration(labelText: 'Hari'),
+              decoration: const InputDecoration(labelText: 'Hari'),
             ),
             TextField(
               controller: _tanggalController,
-              decoration: InputDecoration(labelText: 'Tanggal'),
+              decoration: const InputDecoration(labelText: 'Tanggal'),
             ),
             TextField(
               controller: _jamController,
-              decoration: InputDecoration(labelText: 'Jam'),
+              decoration: const InputDecoration(labelText: 'Jam'),
             ),
           ],
         ),
@@ -320,7 +324,7 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
@@ -333,7 +337,7 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
             };
             Navigator.of(context).pop(updatedSchedule);
           },
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );
@@ -345,17 +349,17 @@ class GeneratedTokenDisplay extends StatelessWidget {
   final String? token;
   final String? mataKuliah;
 
-  GeneratedTokenDisplay({this.token, this.mataKuliah});
+  const GeneratedTokenDisplay({super.key, this.token, this.mataKuliah});
 
   @override
   Widget build(BuildContext context) {
     return token != null && mataKuliah != null
         ? Container(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8.0),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 6.0,
@@ -368,12 +372,12 @@ class GeneratedTokenDisplay extends StatelessWidget {
               children: [
                 Text(
                   'MATA KULIAH: $mataKuliah',
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.black, decoration: TextDecoration.none),
+                  style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.black, decoration: TextDecoration.none),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
                   'GENERATED TOKEN : $token',
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.black, decoration: TextDecoration.none),
+                  style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.black, decoration: TextDecoration.none),
                 ),
               ],
             ),

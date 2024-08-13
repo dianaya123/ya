@@ -1,8 +1,6 @@
 import 'package:academix_polnep/views/helper/styleHelper.dart';
 import 'package:academix_polnep/views/sihadir/dashboard/dashboard.dart';
-import 'package:academix_polnep/views/sihadir/kelas/kelas_admin.dart';
 import 'package:academix_polnep/views/sihadir/kelas/kelas_dosen.dart';
-import 'package:academix_polnep/views/sihadir/kelas/kelas_mahasiswa.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -20,7 +18,7 @@ class _NavbarState extends State<Navbar> {
     const Dashboard(), // home
     const Text("Presensi"), // presensi
     const Text("Kalender Akademik"), // kalender
-    KelasDosen(), // kelas
+    const KelasDosen(), // kelas
     const Text("Laporan"), // laporan
   ];
 

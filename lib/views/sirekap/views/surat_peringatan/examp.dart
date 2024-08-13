@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Examp_page extends StatefulWidget {
-  const Examp_page({Key? key}) : super(key: key);
+  const Examp_page({super.key});
 
   @override
   State<Examp_page> createState() => _Examp_pageState();
@@ -35,19 +35,19 @@ class _Examp_pageState extends State<Examp_page> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 20,
                 right: 40,
                 child: Icon(
                   Icons.account_circle,
                   size: 60,
-                  color: const Color.fromARGB(255, 255, 255, 255),
+                  color: Color.fromARGB(255, 255, 255, 255),
                 ),
               ),
             ],
           ),
 
-          SizedBox(height: 60.0),
+          const SizedBox(height: 60.0),
 
           //Main
           Row(
@@ -81,12 +81,12 @@ class _Examp_pageState extends State<Examp_page> {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.monitor_rounded,
                             size: 50,
                             color: Colors.black,
                           ),
-                          SizedBox(width: 10), // Jarak antara ikon dan teks
+                          const SizedBox(width: 10), // Jarak antara ikon dan teks
                           Text(
                             'Dashboard',
                             style: GoogleFonts.poppins(
@@ -97,7 +97,7 @@ class _Examp_pageState extends State<Examp_page> {
                       const SizedBox(height: 70), // Jarak antara baris ikon
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.report_gmailerrorred_outlined,
                             size: 50,
                             color: Colors.black,
@@ -114,7 +114,7 @@ class _Examp_pageState extends State<Examp_page> {
                       const SizedBox(height: 70), // Jarak antara baris ikon
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.keyboard_arrow_down,
                             size: 50,
                             color: Colors.black,
@@ -131,7 +131,7 @@ class _Examp_pageState extends State<Examp_page> {
                       const SizedBox(height: 70), // Jarak antara baris ikon
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.keyboard_arrow_down,
                             size: 50,
                             color: Colors.black,
@@ -164,98 +164,98 @@ class _Examp_pageState extends State<Examp_page> {
                     child: Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 33),
+                          margin: const EdgeInsets.only(left: 33),
                           width: 85,
                           height: 85,
-                          color: Color(0xFFFFE603),
+                          color: const Color(0xFFFFE603),
                         ),
                         Container(
                           width: 112,
                           height: 85,
-                          color: Color(0xFFD9D9D9),
+                          color: const Color(0xFFD9D9D9),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 22),
+                          margin: const EdgeInsets.only(left: 22),
                           width: 85,
                           height: 85,
-                          color: Color(0xFFF77700),
+                          color: const Color(0xFFF77700),
                         ),
                         Container(
                           width: 112,
                           height: 85,
-                          color: Color(0xFFD9D9D9),
+                          color: const Color(0xFFD9D9D9),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 22),
+                          margin: const EdgeInsets.only(left: 22),
                           width: 85,
                           height: 85,
-                          color: Color(0xFFF70000),
+                          color: const Color(0xFFF70000),
                         ),
                         Container(
                           width: 112,
                           height: 85,
-                          color: Color(0xFFD9D9D9),
+                          color: const Color(0xFFD9D9D9),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 22),
+                          margin: const EdgeInsets.only(left: 22),
                           width: 85,
                           height: 85,
-                          color: Color(0xFF575757),
+                          color: const Color(0xFF575757),
                         ),
                         Container(
                           width: 112,
                           height: 85,
-                          color: Color(0xFFD9D9D9),
+                          color: const Color(0xFFD9D9D9),
                         )
                       ],
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 50),
+                    margin: const EdgeInsets.only(top: 50),
                     width: 916,
                     height: 218,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEFEFEF),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFEFEFEF),
                     ),
                     child: Column(
                       children: [
                         Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(padding: EdgeInsets.only(left: 360)),
+                              const Padding(padding: EdgeInsets.only(left: 360)),
                               Text(
                                 "Pengumuman",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 25, color: Color(0xFF121111)),
+                                    fontSize: 25, color: const Color(0xFF121111)),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 190,
                               ),
                               Text(
                                 "Lihat semua",
                                 style: GoogleFonts.poppins(
                                     fontSize: 18,
-                                    color: Color(0xFF1D9FD6),
+                                    color: const Color(0xFF1D9FD6),
                                     decoration: TextDecoration.underline,
-                                    decorationColor: Color(0xFF1D9FD6)),
+                                    decorationColor: const Color(0xFF1D9FD6)),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward,
                                 color: Color(0xFF1D9FD6),
                                 size: 30,
                               ),
                             ]),
-                        Divider(
+                        const Divider(
                           color: Color(0xFF39EADD),
                           thickness: 5,
                         ),
                         Row(
                           children: [
                             Container(
-                              margin: EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.all(8.0),
                               width: 54,
                               height: 130,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0xFFAAA1A1),
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
@@ -264,12 +264,12 @@ class _Examp_pageState extends State<Examp_page> {
                             Container(
                               width: 138,
                               height: 130,
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.only(top: 10),
+                              decoration: const BoxDecoration(
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
                               ),
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -289,10 +289,10 @@ class _Examp_pageState extends State<Examp_page> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.all(8.0),
                               width: 54,
                               height: 130,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0xFFAAA1A1),
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
@@ -301,14 +301,14 @@ class _Examp_pageState extends State<Examp_page> {
                             Container(
                               width: 138,
                               height: 130,
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.only(top: 10),
+                              decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
                                         color: Colors.green, width: 15),
                                     top: BorderSide(color: Colors.black)),
                               ),
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -328,10 +328,10 @@ class _Examp_pageState extends State<Examp_page> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.all(8.0),
                               width: 54,
                               height: 130,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0xFFAAA1A1),
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
@@ -340,12 +340,12 @@ class _Examp_pageState extends State<Examp_page> {
                             Container(
                               width: 138,
                               height: 130,
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.only(top: 10),
+                              decoration: const BoxDecoration(
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
                               ),
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -365,10 +365,10 @@ class _Examp_pageState extends State<Examp_page> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.all(8.0),
                               width: 54,
                               height: 130,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0xFFAAA1A1),
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
@@ -377,12 +377,12 @@ class _Examp_pageState extends State<Examp_page> {
                             Container(
                               width: 138,
                               height: 130,
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.only(top: 10),
+                              decoration: const BoxDecoration(
                                 border: Border(
                                     top: BorderSide(color: Colors.black)),
                               ),
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -408,11 +408,11 @@ class _Examp_pageState extends State<Examp_page> {
                   ),
                   Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: 50),
+                    margin: const EdgeInsets.only(top: 50),
                     width: 916,
                     height: 46,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF39EADD),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF39EADD),
                     ),
                     child: Text(
                       "Jumlah mahasiswa yang ingin kompensasi",
@@ -425,8 +425,8 @@ class _Examp_pageState extends State<Examp_page> {
                   Container(
                     width: 916,
                     height: 150,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFFFF),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFFFFF),
                     ),
                     child: Center(
                       child: Text(

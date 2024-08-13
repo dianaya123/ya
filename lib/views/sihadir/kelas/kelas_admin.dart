@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:academix_polnep/views/helper/styleHelper.dart';
 
 void main() {
-  runApp(KelasAdmin());
+  runApp(const KelasAdmin());
 }
 
 class KelasAdmin extends StatelessWidget {
+  const KelasAdmin({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -29,9 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Tambah Kelas'),
+          title: const Text('Tambah Kelas'),
           content: TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Nama Kelas',
             ),
             onChanged: (value) {
@@ -40,13 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Batal'),
+              child: const Text('Batal'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Simpan'),
+              child: const Text('Simpan'),
               onPressed: () {
                 setState(() {
                   if (newClassName.isNotEmpty) {
@@ -69,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(gradient: bgGradient),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -101,14 +105,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: List.generate(classList.length, (index) {
                   return Container(
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.white, width: 2),
                     ),
                     child: Center(
                       child: Text(
                         classList[index],
-                        style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+                        style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -120,13 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Color(0xFF00BBD4), backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xFF00BBD4), backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0),
                   ),
                 ),
                 onPressed: _showAddClassDialog,
-                child: Text('Tambah'),
+                child: const Text('Tambah'),
               ),
             ),
           ],

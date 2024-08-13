@@ -67,17 +67,17 @@ class _PilihanState extends State<Pilihan> {
                     child: Column(
                       children: <Widget>[
                         const Padding(padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0)),
-                        RichText(
-                            text: TextSpan(
-                          text: "SIREKAP",
-                          style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold)),
-                        )),
-                        const Padding(padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0)),
+                        // RichText(
+                        //     text: TextSpan(
+                        //   text: "SIREKAP",
+                        //   style: GoogleFonts.poppins(textStyle: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold)),
+                        // )),
+                        // const Padding(padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0)),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent),
                           child: Image.asset(
-                            "assets/images/logo.png",
-                            scale: 15,
+                            "assets/images/logo_sirekap.png",
+                            scale: 1,
                           ),
                           onPressed: () {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

@@ -5,43 +5,47 @@ import 'package:academix_polnep/backend/services/userService.dart';
 class UserProvider with ChangeNotifier {
   final UserService _userService = UserService();
 
-  late users _user;
-  users get user => _user;
+  Users? _user;
+  Users? get user => _user;
 
-  Future<bool> loginUser(String nomorInduk, String password) async {
+  Future<Users?> loginUser(String nomorInduk, String password) async {
     try {
       _user = await _userService.loginUser(nomorInduk, password);
       notifyListeners();
-      return true;
+      return _user;
     } catch (e) {
-      return false;
-      // throw Exception('Failed to login user: $e');
+      throw Exception('Error during login: $e');
+    }
+  }
+
+  Future<void> fetchUser() async {
+    try {
+      _user = await _userService.fetchUser();
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Error fetching user data: $e');
+    }
+  }
+
+  Future<void> addUser(Users user) async {
+    Users newUser = await _userService.createUser(user);
+    _user = newUser;
+    notifyListeners();
+  }
+
+  Future<void> updateUser(int id, Users user) async {
+    Users updatedUser = await _userService.updateUser(id, user);
+    if (_user != null && _user!.id == id) {
+      _user = updatedUser;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteUser(int id) async {
+    await _userService.deleteUser(id);
+    if (_user != null && _user!.id == id) {
+      _user = null;
+      notifyListeners();
     }
   }
 }
-
-  // Future<void> addUser(users user) async {
-  //   users newUser = await _userService.createUser(user);
-  //   _user.add(newUser);
-  //   notifyListeners();
-  // }
-
-  // Future<void> fetchUser() async {
-  //   _user = await _userService.fetchUser();
-  //   notifyListeners();
-  // }
-
-  // Future<void> updateUser(int id, users user) async {
-  //   users updatedUser = await _userService.updateUser(id, user);
-  //   int index = _user.indexWhere((c) => c.id == id);
-  //   if (index != -1) {
-  //     _user[index] = updatedUser;
-  //     notifyListeners();
-  //   }
-  // }
-
-  // Future<void> deleteContact(int id) async {
-  //   await _userService.deleteUser(id);
-  //   _user.removeWhere((user) => user.id == id);
-  //   notifyListeners();
-  // }

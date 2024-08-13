@@ -47,4 +47,5 @@ app.*.map.json
 /android/app/release
 
 
-*test.dart
+# if you delete this I'll trow a pipe bomb at ye
+*/test

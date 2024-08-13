@@ -21,14 +21,14 @@ class Dashboard extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   color: Colors.red,
                   child: TextButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RevisiPages()));
+                                builder: (context) => const RevisiPages()));
                       },
                       child: const Text(
                         'Revisi Button',

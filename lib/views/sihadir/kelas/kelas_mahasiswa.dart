@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class KelasMahasiswa extends StatelessWidget {
+  const KelasMahasiswa({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,12 +12,14 @@ class KelasMahasiswa extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -48,7 +52,7 @@ class _MainPageState extends State<MainPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               // Menampilkan tabel jadwal mingguan
               WeeklyScheduleTable(
                 schedule: _weeklySchedule,
@@ -67,7 +71,7 @@ class WeeklyScheduleTable extends StatefulWidget {
   final List<Map<String, String>> schedule;
   final Function(List<Map<String, String>>) onEditWeeklySchedule;
 
-  WeeklyScheduleTable({
+  const WeeklyScheduleTable({super.key, 
     required this.schedule,
     required this.onEditWeeklySchedule,
   });
@@ -81,7 +85,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
   void _addClass() async {
     final newSchedule = await showDialog<Map<String, String>>(
       context: context,
-      builder: (context) => EditScheduleDialog(
+      builder: (context) => const EditScheduleDialog(
         schedule: {'mata_kuliah': '','dosen': '', 'ruang': '', 'hari': '', 'tanggal': '', 'jam': ''},
       ),
     );
@@ -120,11 +124,11 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
         actions: [
           TextButton(
             onPressed: () => _presensiClass(index),
-            child: Text('Absensi'),
+            child: const Text('Absensi'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       ),
@@ -143,7 +147,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'JADWAL KELAS ANDA MINGGU INI',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
             ),
@@ -151,7 +155,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columnSpacing: 16.0,
-                columns: [
+                columns: const [
                   DataColumn(
                       label: Text('MATA KULIAH',
                           style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold))),
@@ -167,10 +171,10 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
                       DataCell(
                         InkWell(
                           onTap: () => _showDetailsDialog(index),
-                          child: Text(scheduleItem['mata_kuliah']!, style: TextStyle(fontSize: 12.0)),
+                          child: Text(scheduleItem['mata_kuliah']!, style: const TextStyle(fontSize: 12.0)),
                         ),
                       ),
-                      DataCell(Text(scheduleItem['hari']!, style: TextStyle(fontSize: 12.0))),
+                      DataCell(Text(scheduleItem['hari']!, style: const TextStyle(fontSize: 12.0))),
                     ],
                   );
                 }).toList(),
@@ -187,7 +191,7 @@ class _WeeklyScheduleTableState extends State<WeeklyScheduleTable> {
 class EditScheduleDialog extends StatefulWidget {
   final Map<String, String> schedule;
 
-  EditScheduleDialog({required this.schedule});
+  const EditScheduleDialog({super.key, required this.schedule});
 
   @override
   _EditScheduleDialogState createState() => _EditScheduleDialogState();
@@ -218,33 +222,33 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Edit Schedule'),
+      title: const Text('Edit Schedule'),
       content: SingleChildScrollView(
         child: Column(
           children: [
             TextField(
               controller: _mataKuliahController,
-              decoration: InputDecoration(labelText: 'Mata Kuliah'),
+              decoration: const InputDecoration(labelText: 'Mata Kuliah'),
             ),
             TextField(
               controller: _dosenController,
-              decoration: InputDecoration(labelText: 'Dosen'),
+              decoration: const InputDecoration(labelText: 'Dosen'),
             ),
             TextField(
               controller: _ruangController,
-              decoration: InputDecoration(labelText: 'Ruang'),
+              decoration: const InputDecoration(labelText: 'Ruang'),
             ),
             TextField(
               controller: _hariController,
-              decoration: InputDecoration(labelText: 'Hari'),
+              decoration: const InputDecoration(labelText: 'Hari'),
             ),
             TextField(
               controller: _tanggalController,
-              decoration: InputDecoration(labelText: 'Tanggal'),
+              decoration: const InputDecoration(labelText: 'Tanggal'),
             ),
             TextField(
               controller: _jamController,
-              decoration: InputDecoration(labelText: 'Jam'),
+              decoration: const InputDecoration(labelText: 'Jam'),
             ),
           ],
         ),
@@ -254,7 +258,7 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
@@ -268,7 +272,7 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
             };
             Navigator.of(context).pop(updatedSchedule);
           },
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );
