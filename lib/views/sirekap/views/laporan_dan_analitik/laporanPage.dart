@@ -54,13 +54,13 @@ class LaporanPages extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 60, right: 10, top: 10, bottom: 10),
+                  left: 30, right: 10, top: 10, bottom: 10),
               child: Row(
                 children: [
                   SizedBox(
-                    width: 50,
+                    width: 150,
                     height: 50,
-                    child: Image.asset('asset/sirekap_logo.png',
+                    child: Image.asset('images/SIREKAP.png',
                         fit: BoxFit.contain),
                   ),
                   const Spacer(),
