@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:academix_polnep/views/login/login.dart';
-import 'package:academix_polnep/views/login/pilihan.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<String> get _localPath async {
