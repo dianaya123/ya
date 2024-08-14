@@ -1,4 +1,5 @@
 import 'package:academix_polnep/views/sihadir/navigation.dart';
+import 'package:academix_polnep/views/sirekap/master.dart';
 import 'package:flutter/material.dart';
 import 'package:academix_polnep/views/helper/styleHelper.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -81,7 +82,7 @@ class _PilihanState extends State<Pilihan> {
                           ),
                           onPressed: () {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                              return const Navbar();
+                              return const NavbarSiRekap();
                             }));
                           },
                         ),

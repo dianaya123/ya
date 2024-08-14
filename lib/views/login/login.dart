@@ -1,6 +1,7 @@
 import 'package:academix_polnep/backend/providers/userProvider.dart';
 import 'package:academix_polnep/views/helper/sessionManager.dart';
 import 'package:academix_polnep/views/helper/styleHelper.dart';
+import 'package:academix_polnep/views/helper/getter.dart';
 import 'package:academix_polnep/views/login/forgetPassword.dart';
 import 'package:academix_polnep/views/login/pilihan.dart';
 import 'package:flutter/material.dart';
@@ -51,14 +52,14 @@ class _LoginState extends State<Login> {
                     ),
                     const Padding(padding: EdgeInsets.all(20)),
                     Text(
-                      "Welcome!",
+                      "Selamat Datang!",
                       style: GoogleFonts.poppins(
                         textStyle: const TextStyle(fontSize: 30, color: Colors.white),
                       ),
                     ),
                     const Padding(padding: EdgeInsets.all(5)),
                     Text(
-                      "Login To Your Account",
+                      "Masuk ke akun anda",
                       style: GoogleFonts.poppins(
                         textStyle: const TextStyle(
                           fontSize: 25,
@@ -89,7 +90,7 @@ class _LoginState extends State<Login> {
                         ),
                         validator: (value) {
                           if (value!.contains(RegExp(r'([a-zA-Z])'))) {
-                            return "NIM should not contain letters";
+                            return "NIM/NIP tidak boleh memiliki huruf";
                           }
                           return null;
                         },
@@ -103,7 +104,7 @@ class _LoginState extends State<Login> {
                         obscureText: true,
                         decoration: InputDecoration(
                           isDense: true,
-                          hintText: "PASSWORD",
+                          hintText: "Kata sandi",
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -117,7 +118,7 @@ class _LoginState extends State<Login> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Password cannot be empty";
+                            return "kata sandi tidak boleh kosong";
                           }
                           return null;
                         },
@@ -128,7 +129,7 @@ class _LoginState extends State<Login> {
                       alignment: Alignment.center,
                       child: RichText(
                         text: TextSpan(
-                          text: "Forgot your Password?",
+                          text: "Lupa kata sandi Anda?",
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(color: Colors.white, fontSize: 15),
                           ),
@@ -163,20 +164,22 @@ class _LoginState extends State<Login> {
                           shadowColor: Colors.transparent,
                         ),
                         child: Text(
-                          "Login",
+                          "Masuk",
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ),
                         onPressed: () async {
                           if (_formkey.currentState!.validate()) {
-                            String nomorInduk = nomorIndukController.text.trim();
+                            String nI = nomorIndukController.text.trim();
                             String password = passwordController.text.trim();
 
                             try {
-                              var user = await provider.loginUser(nomorInduk, password);
+                              var user = await provider.loginUser(nI, password);
                               if (user?.status == 200) {
                                 writeSession(user?.token);
+                                Name(user?.name);
+                                NomorInduk(user?.nomorInduk);
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(builder: (context) {
@@ -185,7 +188,7 @@ class _LoginState extends State<Login> {
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Login failed')),
+                                  const SnackBar(content: Text('Gagal masuk')),
                                 );
                               }
                             } catch (e) {

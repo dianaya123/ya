@@ -1,4 +1,6 @@
+import 'package:academix_polnep/views/helper/getter.dart';
 import 'package:academix_polnep/views/helper/styleHelper.dart';
+import 'package:academix_polnep/views/login/profile.dart';
 import 'package:academix_polnep/views/sihadir/dashboard/dashboard.dart';
 import 'package:academix_polnep/views/sihadir/kelas/kelas_dosen.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,35 @@ class _NavbarState extends State<Navbar> {
       decoration: BoxDecoration(gradient: bgGradient),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          leading: TextButton(
+            child: const Icon(
+              Icons.account_circle,
+              size: 40,
+              color: Colors.grey,
+            ),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const userProfile();
+            })),
+          ),
+          title: Text(userName()),
+          actions: const [
+            // do not touch or you'll accidentally fall of a window
+            // TextButton(
+            //     onPressed: Placeholder.new,
+            //     child: Icon(
+            //       Icons.account_circle,
+            //       size: 40,
+            //     )),
+            TextButton(
+                onPressed: Placeholder.new,
+                child: Icon(
+                  Icons.notifications_outlined,
+                  size: 40,
+                  color: Colors.grey,
+                ))
+          ],
+        ),
         body: Form(
             child: Container(
           padding: const EdgeInsets.all(20),
