@@ -2,6 +2,7 @@ import 'package:academix_polnep/views/helper/getter.dart';
 import 'package:academix_polnep/views/helper/styleHelper.dart';
 import 'package:academix_polnep/views/login/profile.dart';
 import 'package:academix_polnep/views/sihadir/dashboard/dashboard.dart';
+import 'package:academix_polnep/views/sihadir/kaldik/kaldik.dart';
 import 'package:academix_polnep/views/sihadir/kelas/kelas_dosen.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -16,10 +17,9 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedNavbar = 0;
   final _pages = [
-    // contoh
     const Dashboard(), // home
     const Text("Presensi"), // presensi
-    const Text("Kalender Akademik"), // kalender
+    const KaldikMahasiswa(), // kalender
     const KelasDosen(), // kelas
     const Text("Laporan"), // laporan
   ];
@@ -47,7 +47,10 @@ class _NavbarState extends State<Navbar> {
               return const userProfile();
             })),
           ),
-          title: Text(userName()),
+          title: Text(
+            userName(),
+            style: const TextStyle(fontSize: 20),
+          ),
           actions: const [
             // do not touch or you'll accidentally fall of a window
             // TextButton(
