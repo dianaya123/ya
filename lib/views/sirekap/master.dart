@@ -1,5 +1,6 @@
 import 'package:academix_polnep/views/sirekap/views/dashboard.dart';
 import 'package:academix_polnep/views/sirekap/views/surat_peringatan/admin_ti_ori.dart';
+<<<<<<< HEAD
 // <<<<<<< HEAD
 // import 'package:academix_polnep/views/sirekap/views/surat_peringatan/admin_ti_ori.dart';
 // =======
@@ -7,6 +8,8 @@ import 'package:academix_polnep/views/sirekap/views/surat_peringatan/admin_ti_or
 // // import 'package:academix_polnep/views/sirekap/views/dashboard/notifikasi.dart';
 // // import 'package:academix_polnep/views/sirekap/views/dashboard/nt.dart';
 // >>>>>>> 8c541c9d83bd91ffd756c6eadf81ee520271e9f8
+=======
+>>>>>>> b23fa9e41ef9ca6da3a9b52e94215af00e7ce793
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
