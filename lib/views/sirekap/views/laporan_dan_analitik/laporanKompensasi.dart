@@ -13,6 +13,7 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
   String selectedKelas = '-';
   String selectedAngkatan = '-';
   String selectedSemester = '-';
+  String selectedSP = '-';
   TextEditingController searchController = TextEditingController();
 
   List<Map<String, String>> data = [];
@@ -45,6 +46,7 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
               'Semester': item['Semester']?.toString() ?? '',
               'Angkatan': item['angkatan']?.toString() ?? '',
               'Tahun': item['Tahun']?.toString() ?? '',
+              'SP': item['SP']?.toString() ?? '',
               'Total': item['totalKompen']?.toString() ?? '',
             };
           }).toList();
@@ -75,6 +77,8 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
             selectedAngkatan == '-' || item['Angkatan'] == selectedAngkatan;
         bool matchSemester =
             selectedSemester == '-' || item['Semester'] == selectedSemester;
+        bool matchSP =
+            selectedSP == '-' || item['SP'] == selectedSP;
         bool matchSearch = searchController.text.isEmpty ||
             item['Nama']!
                 .toLowerCase()
@@ -87,6 +91,7 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
             matchKelas &&
             matchAngkatan &&
             matchSemester &&
+            matchSP &&
             matchSearch;
       }).toList();
     });
@@ -202,6 +207,29 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                   ),
                 ],
               ),
+              const SizedBox(width: 30),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('SP'),
+                  DropdownButton<String>(
+                    value: selectedSP,
+                    items:
+                        <String>['-', 'sp1', 'sp2', 'sp3'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedSP = value!;
+                        filterData();
+                      });
+                    },
+                  ),
+                ],
+              ),
               const Spacer(),
               SizedBox(
                 width: 250,
@@ -235,6 +263,7 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                       DataColumn(label: Text('Semester')),
                       DataColumn(label: Text('Angkatan')),
                       DataColumn(label: Text('Tahun')),
+                      DataColumn(label: Text('SP')),
                       DataColumn(label: Text('Total')),
                     ],
                     rows: filteredData.map((item) {
@@ -247,6 +276,7 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                           DataCell(Text(item['Semester']!)),
                           DataCell(Text(item['Angkatan']!)),
                           DataCell(Text(item['Tahun']!)),
+                          DataCell(Text(item['SP']!)),
                           DataCell(Text(item['Total']!)),
                         ],
                       );
