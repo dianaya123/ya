@@ -1,11 +1,5 @@
 import 'package:academix_polnep/views/sirekap/views/dashboard.dart';
-<<<<<<< HEAD
 import 'package:academix_polnep/views/sirekap/views/surat_peringatan/admin_ti_ori.dart';
-=======
-import 'package:academix_polnep/views/sirekap/views/dashboard/cobe.dart';
-// import 'package:academix_polnep/views/sirekap/views/dashboard/notifikasi.dart';
-// import 'package:academix_polnep/views/sirekap/views/dashboard/nt.dart';
->>>>>>> 8c541c9d83bd91ffd756c6eadf81ee520271e9f8
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
