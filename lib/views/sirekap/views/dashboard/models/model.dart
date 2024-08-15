@@ -1,8 +1,8 @@
-import 'package:json_annotation/json_annotation.dart';
+// import 'package:json_annotation/json_annotation.dart';
 
 part 'model.g.dart'; // Ini akan dihasilkan oleh package build_runner
 
-@JsonSerializable()
+// @JsonSerializable()
 class JumlahModel {
   final int jumlah;
 
