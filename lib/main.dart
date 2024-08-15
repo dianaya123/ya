@@ -1,3 +1,5 @@
+import 'package:academix_polnep/views/sirekap/master.dart';
+import 'package:academix_polnep/views/login/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {

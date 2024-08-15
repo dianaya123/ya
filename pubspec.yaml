@@ -40,7 +40,7 @@ dependencies:
   intl: ^0.19.0
   open_file: ^3.3.2
   pdf: ^3.11.0
-  pdf_image_renderer: ^0.7.0
+  # pdf_image_renderer: ^0.7.0
   pdfx: ^2.6.0
 
 dev_dependencies:

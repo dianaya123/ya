@@ -25,8 +25,7 @@ class _CetakkompenState extends State<Cetakkompen> {
 
   Future<void> _loadPdf() async {
     try {
-      final ByteData data =
-          await rootBundle.load('assets/laporanjobsheet11.pdf');
+      final ByteData data = await rootBundle.load('assets/testpdf.pdf');
       final Uint8List bytes = data.buffer.asUint8List();
       final Directory tempDir = await getTemporaryDirectory();
       final File file = File('${tempDir.path}/testpdf.pdf');
