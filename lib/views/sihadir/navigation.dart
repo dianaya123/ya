@@ -3,7 +3,9 @@ import 'package:academix_polnep/views/helper/styleHelper.dart';
 import 'package:academix_polnep/views/login/profile.dart';
 import 'package:academix_polnep/views/sihadir/dashboard/dashboard.dart';
 import 'package:academix_polnep/views/sihadir/kaldik/kaldik.dart';
-import 'package:academix_polnep/views/sihadir/kelas/kelas_dosen.dart';
+import 'package:academix_polnep/views/sihadir/kelas/kelas_mahasiswa.dart';
+import 'package:academix_polnep/views/sihadir/laporan/laporanMahasiswa.dart';
+import 'package:academix_polnep/views/sihadir/presensi/presensi_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -18,10 +20,10 @@ class _NavbarState extends State<Navbar> {
   int _selectedNavbar = 0;
   final _pages = [
     const Dashboard(), // home
-    const Text("Presensi"), // presensi
+    const PresensiScreens(), // presensi
     const KaldikMahasiswa(), // kalender
-    const KelasDosen(), // kelas
-    const Text("Laporan"), // laporan
+    const KelasMahasiswa(), // kelas
+    const LaporanMahasiswa(), // laporan
   ];
 
   void changeSelectedNavBar(int index) {
