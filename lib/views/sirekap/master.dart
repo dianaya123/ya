@@ -1,4 +1,5 @@
 import 'package:academix_polnep/views/sirekap/views/dashboard.dart';
+import 'package:academix_polnep/views/sirekap/views/surat_peringatan/admin_ti_ori.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class _NavbarSiRekapState extends State<NavbarSiRekap> {
   int selected = 0;
   
   final page = [
-    const Dashboard(),
+    AdminTiPage(),
     const Text("Presensi"),
     const Text("Test"),
     const Text("Halo"),
