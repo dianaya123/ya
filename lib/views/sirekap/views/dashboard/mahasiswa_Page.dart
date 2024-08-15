@@ -1,13 +1,19 @@
+import 'package:academix_polnep/views/sirekap/views/dashboard/mahasiswa_Page.dart';
 import 'package:academix_polnep/views/sirekap/views/dashboard/halaman.dart';
-import 'package:academix_polnep/views/sirekap/views/dashboard/cobe.dart';
-// import 'package:academix_polnep/views/sirekap/views/dashboard/mahasiswa.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/dropdown.dart';
 import 'dart:async';
+import 'api_service.dart';
+// import 'package:http/http.dart' as http;
+
+
+
 
 class mahasiswa extends StatefulWidget {
-  const mahasiswa({super.key});
+   final ApiService apiService = ApiService('http://127.0.0.1:8000/api/Dashboard-Mahasiswa/1');
+  
+    mahasiswa({Key? key}) : super(key: key);
 
   @override
   State<mahasiswa> createState() => _mahasiswaState();
@@ -17,26 +23,11 @@ class _mahasiswaState extends State<mahasiswa> {
   String? selectedValue = '2023/2024'; 
   final List<String> items = ['2022/2023','2023/2024'];
    final PageController _pageController = PageController(viewportFraction: 0.85);
-  // int _jumlahKehadiran = 0;
-  // int _sakit = 0;
-  // int _alpa = 0;
-  // int _izin = 0;
-  // int _jumlahKompensasi = 0;
+  
  
   @override
   void initState() {
     super.initState();
-  }
-
-  
-
-  Stream<int> getJumlahStream() async* {
-    int jumlah = 0;
-    while (true) {
-      await Future.delayed(Duration(seconds: 1000));
-      jumlah++;
-      yield jumlah; // Data dari backend
-    }
   }
 
     @override
@@ -85,21 +76,40 @@ class _mahasiswaState extends State<mahasiswa> {
                         color: Colors.black,
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       top: 10,
                       right: 70,
+                       child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const MyWidget()),
+                            );
+                          },
                       child: Icon(
                         Icons.notifications,
                         size: 50,
                         color: Color.fromARGB(255, 245, 242, 242),
                       ),
+                       ),
                     ),
+                //     Positioned(
+                //   top: 20,
+                //   // right: 5, 
+                //   left: 15,
+                //   child: Image.asset(
+                //     'assets/images/logo_sirekap.png', 
+                //     width: 50,
+                //     height: 50,
+                //   ),
+                // ),
                     Positioned(
                       top: 100,
                       left: 18,
+                      right: 18,
                       child: Container(
-                        height: 95,
-                        width: 394,
+                      height: MediaQuery.of(context).size.height * 0.12, 
+                      width: MediaQuery.of(context).size.width * 0.9, 
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -131,6 +141,7 @@ class _mahasiswaState extends State<mahasiswa> {
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
+                            textAlign: TextAlign.center
                           ),
                         ),
                       ),
@@ -140,7 +151,7 @@ class _mahasiswaState extends State<mahasiswa> {
               ),
             ],
           ),
-           const SizedBox(height: 60.0),
+           const SizedBox(height: 65.0),
           Container(
             height: 655,
             width: double.infinity,
@@ -238,27 +249,15 @@ class _mahasiswaState extends State<mahasiswa> {
                             ],
                           ),
                           child: Center(
-                            child: StreamBuilder<int>(
-                              stream: getJumlahStream(), // Ganti dengan stream dari backend
+                          child: FutureBuilder<int>(
+                          future: widget.apiService.fetchJumlahKehadiran(), // Misalnya, untuk jumlah kehadiran
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return const CircularProgressIndicator(color: Colors.white);
+                                  return const CircularProgressIndicator();
                                 } else if (snapshot.hasError) {
-                                  return const Text(
-                                    'Error',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
+                                  return const Text('Error');
                                 } else {
-                                  return Text(
-                                    '${snapshot.data}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
+                                  return Text('${snapshot.data}');
                                 }
                               },
                             ),
@@ -267,7 +266,7 @@ class _mahasiswaState extends State<mahasiswa> {
                       ),
                       Positioned(
                         top: 80,
-                        left: 223,
+                        left: 225,
                         child: Container(
                           height: 110,
                           width: 168,
@@ -291,7 +290,7 @@ class _mahasiswaState extends State<mahasiswa> {
                       ),
                       Positioned(
                         top: 100,
-                        left: 270,
+                        left: 272,
                         child: Container(
                           height: 48,
                           width: 74.55,
@@ -308,27 +307,15 @@ class _mahasiswaState extends State<mahasiswa> {
                             ],
                           ),
                           child: Center(
-                            child: StreamBuilder<int>(
-                              stream: getJumlahStream(), // Ganti dengan stream dari backend
-                              builder: (context, snapshot) {
+                            child: FutureBuilder<int>(
+                                 future: widget.apiService.fetchSakit(), // Ganti dengan stream dari backend
+                                builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return const CircularProgressIndicator(color: Colors.white);
+                                  return const CircularProgressIndicator();
                                 } else if (snapshot.hasError) {
-                                  return const Text(
-                                    'Error',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
+                                  return const Text('Error');
                                 } else {
-                                  return Text(
-                                    '${snapshot.data}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
+                                  return Text('${snapshot.data}');
                                 }
                               },
                             ),
@@ -336,7 +323,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ),
                       ),
                       Positioned(
-                        top: 230,
+                        top: 222,
                         left: 30,
                         child: Container(
                           height: 110,
@@ -348,7 +335,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ),
                       ),
                       const Positioned(
-                        top: 305,
+                        top: 300,
                         left: 105,
                         child: Text(
                           'Izin',
@@ -360,7 +347,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ),
                       ),
                       Positioned(
-                        top: 250,
+                        top: 245,
                         left: 78,
                         child: Container(
                           height: 48,
@@ -378,36 +365,24 @@ class _mahasiswaState extends State<mahasiswa> {
                             ],
                           ),
                           child: Center(
-                            child: StreamBuilder<int>(
-                              stream: getJumlahStream(), // Ganti dengan stream dari backend
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return const CircularProgressIndicator(color: Colors.white);
-                                } else if (snapshot.hasError) {
-                                  return const Text(
-                                    'Error',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
-                                } else {
-                                  return Text(
-                                    '${snapshot.data}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
-                                }
-                              },
+                            child: FutureBuilder<int>(
+                            future: widget.apiService.fetchIzin(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return const Text('Error');
+                              } else {
+                                return Text('${snapshot.data}');
+                              }
+                            },
                             ),
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 230,
-                        left: 223,
+                        top: 225,
+                        left: 225,
                         child: Container(
                           height: 110,
                           width: 168,
@@ -418,7 +393,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ),
                       ),
                       const Positioned(
-                        top: 305,
+                        top: 300,
                         left: 295,
                         child: Text(
                           'Alpha',
@@ -430,7 +405,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ),
                       ),
                       Positioned(
-                        top: 250,
+                        top: 245,
                         left: 270,
                         child: Container(
                           height: 48,
@@ -448,35 +423,25 @@ class _mahasiswaState extends State<mahasiswa> {
                             ],
                           ),
                           child: Center(
-                            child: StreamBuilder<int>(
-                              stream: getJumlahStream(), // Ganti dengan stream dari backend
+                           child: FutureBuilder<int>(
+                              future: widget.apiService.fetchAlpha(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return const CircularProgressIndicator(color: Colors.white);
+                                  return const CircularProgressIndicator();
                                 } else if (snapshot.hasError) {
-                                  return const Text(
-                                    'Error',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
+                                  return const Text('Error');
                                 } else {
-                                  return Text(
-                                    '${snapshot.data}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                    ),
-                                  );
+                                  return Text('${snapshot.data}');
                                 }
                               },
                             ),
                           ),
                         ),
                       ),
+
+                      
                       Positioned(
-                        top: 360,
+                        top: 365,
                         left: 30,
                         child: Container(
                           height: 110,
@@ -528,27 +493,15 @@ class _mahasiswaState extends State<mahasiswa> {
                               ],
                             ),
                             child: Center(
-                              child: StreamBuilder<int>(
-                                stream: getJumlahStream(), // Ganti dengan stream dari backend
+                              child: FutureBuilder<int>(
+                                future: widget.apiService.fetchJumlahKompensasi(),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return const CircularProgressIndicator(color: Colors.white);
+                                    return const CircularProgressIndicator();
                                   } else if (snapshot.hasError) {
-                                    return const Text(
-                                      'Error',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                      ),
-                                    );
+                                    return const Text('Error');
                                   } else {
-                                    return Text(
-                                      '${snapshot.data}',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                      ),
-                                    );
+                                    return Text('${snapshot.data}');
                                   }
                                 },
                               ),
@@ -557,7 +510,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ),
                       ),
                       Positioned(
-                        top: 360,
+                        top: 365,
                         left: 224,
                         child: Container(
                           height: 110,
@@ -569,7 +522,7 @@ class _mahasiswaState extends State<mahasiswa> {
                           child: Stack(
                             children: [
                               const Positioned(
-                                top: 20,
+                                top: 15,
                                 left: 50,
                                 child: Icon(
                                   Icons.login_outlined, // Ganti dengan ikon yang sesuai
@@ -598,7 +551,14 @@ class _mahasiswaState extends State<mahasiswa> {
                       ),
                       Positioned(
                         top: 500,
-                        left: 30,
+                        left: 28,
+                         child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const MyWidget()),
+                            );
+                          },
                         child: Container(
                           height: 50,
                           width: 369,
@@ -614,11 +574,29 @@ class _mahasiswaState extends State<mahasiswa> {
                                 ),
                               ],
                           ),
+                           child: Center(
+                            child: Text(
+                            'Surat Peringatan',
+                            style: TextStyle(
+                              color: Colors.white, // Warna teks
+                              fontSize: 16, // Ukuran font
+                              fontWeight: FontWeight.bold, // Ketebalan font
+                            ),
+                          ),
                         ),
+                        ),
+                         ),
                       ),
                       Positioned(
                         top: 575,
-                        left: 30,
+                        left: 28,
+                         child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const MyWidget()),
+                            );
+                          },
                         child: Container(
                           height: 50,
                           width: 369,
@@ -634,7 +612,18 @@ class _mahasiswaState extends State<mahasiswa> {
                                 ),
                               ],
                           ),
+                           child: Center(
+                          child: Text(
+                            'Kompensasi',
+                            style: TextStyle(
+                              color: Colors.white, // Warna teks
+                              fontSize: 16, // Ukuran font
+                              fontWeight: FontWeight.bold, // Ketebalan font
+                            ),
+                          ),
                         ),
+                        ),
+                         ),
                       ),
                     ],
                   ),
@@ -674,15 +663,7 @@ class _mahasiswaState extends State<mahasiswa> {
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       AnnouncementPage(
-                        announcements: [
-                          AnnouncementCard(
-                            date: '11 Jul',
-                            topText: 'Lorem ipsum dolor sit amet.',
-                            topTutup: 'Tutup',
-                          ),
-                        ],
-                      ),
-                      AnnouncementPage(
+                        apiService: widget.apiService,
                         announcements: [
                           AnnouncementCard(
                             date: '12 Jul',
@@ -692,6 +673,17 @@ class _mahasiswaState extends State<mahasiswa> {
                         ],
                       ),
                       AnnouncementPage(
+                        apiService: widget.apiService,
+                        announcements: [
+                          AnnouncementCard(
+                            date: '12 Jul',
+                            topText: 'More updates coming soon.',
+                            topTutup: 'Buka',
+                          ),
+                        ],
+                      ),
+                      AnnouncementPage(
+                        apiService: widget.apiService,
                         announcements: [
                           AnnouncementCard(
                             date: '13 Jul',
@@ -701,6 +693,7 @@ class _mahasiswaState extends State<mahasiswa> {
                         ],
                       ),
                       AnnouncementPage(
+                        apiService: widget.apiService,
                         announcements: [
                           AnnouncementCard(
                             date: '14 Jul',
@@ -723,46 +716,39 @@ class _mahasiswaState extends State<mahasiswa> {
 
 
 class AnnouncementPage extends StatelessWidget {
+  final ApiService apiService;
   final List<AnnouncementCard> announcements;
 
-  AnnouncementPage({required this.announcements});
+  AnnouncementPage({required this.apiService, required this.announcements});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(4.0),
-      width: MediaQuery.of(context).size.width, 
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Row(
+    return FutureBuilder<List<AnnouncementCard>>(
+      future: apiService.fetchAnnouncements(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Gagal memuat data'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('Tidak ada pengumuman'));
+        } else {
+          List<AnnouncementCard> announcements = snapshot.data!;
+          return Container(
+            padding: EdgeInsets.all(4.0),
+            width: MediaQuery.of(context).size.width,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: announcements
-                  .map((card) => Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.0), // Mengatur jarak horizontal
-                          child: card,
-                        ),
+                  .map((card) => Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.0),
+                        child: card,
                       ))
                   .toList(),
             ),
-          ),
-          
-          Expanded(
-            flex: 1,
-            child: Row(
-              children: announcements
-                  .map((card) => Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.0), // Mengatur jarak horizontal
-                          child: card,
-                        ),
-                      ))
-                  .toList(),
-            ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 }
@@ -779,20 +765,28 @@ class AnnouncementCard extends StatelessWidget {
     required this.topTutup,
   });
 
+  factory AnnouncementCard.fromJson(Map<String, dynamic> json) {
+    return AnnouncementCard(
+      date: json['date'],
+      topText: json['topText'],
+      topTutup: json['topTutup'],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200.0, 
+      width: 200.0,
       padding: EdgeInsets.all(12.0),
-      margin: EdgeInsets.only(right: 16.0), 
+      margin: EdgeInsets.only(right: 16.0),
       child: Stack(
         children: <Widget>[
           Positioned(
             top: 10,
             left: 10,
             child: Container(
-              height:45.0,
-              width: 44.65, 
+              height: 45.0,
+              width: 44.65,
               color: Color(0xFFD9D9D9),
               child: Center(
                 child: Text(
@@ -807,58 +801,54 @@ class AnnouncementCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 20, 
+            top: 20,
             left: 70,
-            // right: 20,
+            right: 10, // Tambahkan batasan kanan agar teks tidak melebihi batas
             child: Text(
               topText,
-              textAlign: TextAlign.left, 
+              textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.0,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.normal,
               ),
+              maxLines: 2, // Maksimal dua baris
+              overflow: TextOverflow.ellipsis, // Tampilkan ellipsis jika teks terlalu panjang
             ),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                
-                double offsetX = constraints.maxWidth * 0.1; 
-              
+          // Align(
+          //   alignment: Alignment.topRight,
+          //   child: LayoutBuilder(
+          //     builder: (context, constraints) {
+          //       double offsetX = constraints.maxWidth * 0.1;
 
-                return Padding(
-                  padding: EdgeInsets.only(
-                    right: offsetX,
-                    top: 20,
-                  ),
-                  child: Container(
-                    height: 20.0,
-                    width: 60.0,
-                    color: Color(0xFFC81212),
-                    child: Center(
-                      child: Text(
-                        topTutup,
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-
-              
-            ),
-            ),
-
+          //       return Padding(
+          //         padding: EdgeInsets.only(
+          //           right: offsetX,
+          //           top: 20,
+          //         ),
+          //         child: Container(
+          //           height: 20.0,
+          //           width: 60.0,
+          //           color: Color(0xFFC81212),
+          //           child: Center(
+          //             child: Text(
+          //               topTutup,
+          //               style: TextStyle(
+          //                 fontSize: 12.0,
+          //                 fontFamily: 'Poppins',
+          //                 color: Colors.white,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
-      );
-
+    );
   }
 }
