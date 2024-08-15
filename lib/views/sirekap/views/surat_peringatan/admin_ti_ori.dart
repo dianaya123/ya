@@ -62,7 +62,8 @@ class _AdminTiPageState extends State<AdminTiPage> {
                   SizedBox(
                     width: 150,
                     height: 50,
-                    child: Image.asset('asset/sirekap_logo.png'),
+                    child: Image.asset('images/SIREKAP.png',
+                        fit: BoxFit.contain),
                   ),
                   const Spacer(),
                   const Text(

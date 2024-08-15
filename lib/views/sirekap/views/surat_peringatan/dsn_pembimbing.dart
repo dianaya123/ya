@@ -1,8 +1,3 @@
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// // import 'package:intl/intl.dart';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -80,14 +75,83 @@ class _AplikasiSayaState extends State<AplikasiSaya> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
         appBar: AppBar(
-          title: Text('Berita Acara Mahasiswa'),
-          actions: [
-            _buildNotificationIcon(),
-            SizedBox(width: 16),
-          ],
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                icon: const Icon(Icons.menu, color: Colors.white),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF158AD4), Color(0xFF39EADD)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: Image.asset('images/SIREKAP.png',
+                        fit: BoxFit.contain),
+                  ),
+                  const Spacer(),
+                  const Text(
+                    'Hi, Siti Sarah',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(Icons.notifications, color: Colors.white),
+                  const SizedBox(width: 10),
+                  CircleAvatar(
+                    backgroundColor: Colors.yellow,
+                    child: Text('Admin', style: TextStyle(color: Colors.black)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              const DrawerHeader(child: Text('Menu')),
+              ListTile(
+                leading: const Icon(Icons.dashboard),
+                title: const Text('Dashboard'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.analytics),
+                title: const Text('Laporan dan analitik'),
+                selected: true,
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.payment),
+                title: const Text('Kompensasi'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -106,6 +170,32 @@ class _AplikasiSayaState extends State<AplikasiSaya> {
       ),
     );
   }
+    // return MaterialApp(
+    //   home: Scaffold(
+    //     appBar: AppBar(
+    //       title: Text('Berita Acara Mahasiswa'),
+    //       actions: [
+    //         _buildNotificationIcon(),
+    //         SizedBox(width: 16),
+    //       ],
+    //     ),
+    //     body: SingleChildScrollView(
+    //       padding: const EdgeInsets.all(16.0),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           _buildSearchBar(),
+    //           SizedBox(height: 16),
+    //           _buildDetailsSection(),
+    //           SizedBox(height: 16),
+    //           _buildPublishButton(),
+    //           SizedBox(height: 16),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+    // }
 
   Widget _buildNotificationIcon() {
     return Stack(
