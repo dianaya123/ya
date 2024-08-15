@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:academix_polnep/views/sirekap/views/revisi/Confirm.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class PagesFormRevisi extends StatefulWidget {
   const PagesFormRevisi({super.key});
@@ -17,8 +21,66 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
   String? _selectedValue;
   final List<String> _option = ['izin', 'sakit', 'alpha'];
 
+  List<dynamic> _data = [];
+
   bool checked = false;
   bool uploud = false;
+
+  File? _selectedFiled;
+
+  final TextEditingController _nimController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _makulController = TextEditingController();
+  final TextEditingController _keteranganController = TextEditingController();
+  final TextEditingController _deskripsiController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    GetData(); // Fetch data when the widget is initialized
+  }
+
+  Future<void> GetData() async {
+    final String url = "http://127.0.0.1:8000/api/Dashboard-revisi-presensi";
+    try {
+      final response = await http.get(Uri.parse(url));
+      final fetchedData = json.decode(response.body);
+
+      // Periksa apakah `fetchedData` adalah map dan `RevisiPresensi` adalah list
+      if (fetchedData is Map<String, dynamic> &&
+          fetchedData['RevisiPresensi'] is List) {
+        setState(() {
+          _data = fetchedData[
+              'RevisiPresensi']; // Mengambil list dari `RevisiPresensi`
+          _nimController.text = _data[0]['nim']; // Set NIM field
+          _namaController.text = _data[0]['Nama_mahasiswa']; // Set Nama field
+          _makulController.text =
+              _data[0]['Mata_kuliah']; // Set Mata Kuliah field
+          _keteranganController.text =
+              _data[0]['keterangan']; // Set Keterangan field
+        });
+      } else {
+        print('Unexpected JSON structure');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> PostForm() async {
+    final String url = "http://127.0.0.1:8000/api//upload-revisi-presensi";
+    final response = await http.post(Uri.parse(url),
+        headers: <String, String>{'content-type': 'application/json'},
+        body: jsonEncode(<String, dynamic>{
+          'nim': _nimController.text,
+          'nama': _namaController.text,
+          'makul': _makulController.text,
+          'keterangan': _keteranganController.text,
+          'deskripsi': _deskripsiController.text,
+          'status': _selectedValue,
+          'file_path': _selectedFiled,
+        }));
+  }
 
   selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -28,6 +90,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
 
     if (result != null) {
       setState(() {
+        _selectedFiled = File(result.files.single.path!);
         uploud = !false;
       });
       print('file picked : ${result.files.single.path}');
@@ -151,7 +214,12 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
                   height: 50,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PagesUpdated()));
+                    },
                     child: Text(
                       "Kirim",
                       style: GoogleFonts.poppins(color: Colors.white),
@@ -282,6 +350,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
               hintText: "Masukkan NIM",
               hintStyle: TextStyle(color: Colors.grey),
             ),
+            controller: _keteranganController,
           ),
         ],
       ),
@@ -304,6 +373,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
               hintText: "Masukkan NIM",
               hintStyle: TextStyle(color: Colors.grey),
             ),
+            controller: _makulController,
           ),
         ],
       ),
@@ -326,6 +396,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
               hintText: "Masukkan NIM",
               hintStyle: TextStyle(color: Colors.grey),
             ),
+            controller: _namaController,
           ),
         ],
       ),
@@ -348,6 +419,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
               // hintText: "Masukkan NIM",
               hintStyle: TextStyle(color: Colors.grey),
             ),
+            controller: _deskripsiController,
           ),
         ],
       ),
@@ -370,6 +442,7 @@ class _PagesFormRevisiState extends State<PagesFormRevisi> {
               hintText: "Masukkan NIM",
               hintStyle: TextStyle(color: Colors.grey),
             ),
+            controller: _nimController,
           ),
         ],
       ),

@@ -1,7 +1,9 @@
 // import 'package:academix_polnep/views/sirekap/views/revisi/dosen.dart';
-import 'package:academix_polnep/views/sirekap/views/revisi/dosen1.dart';
-import 'package:academix_polnep/views/sirekap/views/revisi/revisi.dart';
-import 'package:academix_polnep/views/sirekap/views/revisi/updated.dart';
+import 'package:academix_polnep/views/sirekap/views/revisi/dosen.dart';
+import 'package:academix_polnep/views/sirekap/views/revisi/listrev.dart';
+// import 'package:academix_polnep/views/sirekap/views/revisi/dosen1.dart';
+import 'package:academix_polnep/views/sirekap/views/revisi/revisiNav.dart';
+import 'package:academix_polnep/views/sirekap/views/revisi/Confirm.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -31,25 +33,10 @@ class Dashboard extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RevisiPages()));
+                                builder: (context) => PageList()));
                       },
                       child: const Text(
-                        'Revisi Button',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ),
-                Container(
-                  margin: EdgeInsets.all(20),
-                  color: Colors.red,
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PagesUpdated()));
-                      },
-                      child: const Text(
-                        'Updated Button ',
+                        'Mahasiswa Pages Button',
                         style: TextStyle(color: Colors.white),
                       )),
                 ),
@@ -59,10 +46,10 @@ class Dashboard extends StatelessWidget {
                   child: TextButton(
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Dosen1()));
+                            MaterialPageRoute(builder: (context) => Dosen()));
                       },
                       child: const Text(
-                        'Updated Button ',
+                        'Dosen Pages Button ',
                         style: TextStyle(color: Colors.white),
                       )),
                 ),
