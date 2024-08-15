@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class LaporanKompensasi extends StatefulWidget {
   @override
@@ -13,78 +15,79 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
   String selectedSemester = '-';
   TextEditingController searchController = TextEditingController();
 
-  List<Map<String, String>> dataMahasiswa = [
-    {
-      'NO': '1',
-      'Nama': 'Siti Sabrina Oktavia',
-      'NIM': '3202216002',
-      'Kelas': 'A',
-      'Semester': '4',
-      'Angkatan': '22',
-      'Tahun': '2022-2023',
-      'Total': '40',
-    },
-    {
-      'NO': '2',
-      'Nama': 'Rizwanda',
-      'NIM': '3202216001',
-      'Kelas': 'C',
-      'Semester': '2',
-      'Angkatan': '22',
-      'Tahun': '2023-2024',
-      'Total': '40',
-    },
-    {
-      'NO': '3',
-      'Nama': 'Yajid',
-      'NIM': '3202216004',
-      'Kelas': 'C',
-      'Semester': '4',
-      'Angkatan': '22',
-      'Tahun': '2023-2024',
-      'Total': '40',
-    },
-    {
-      'NO': '4',
-      'Nama': 'Haykal',
-      'NIM': '3202216006',
-      'Kelas': 'C',
-      'Semester': '4',
-      'Angkatan': '22',
-      'Tahun': '2023-2024',
-      'Total': '40',
-    },
-    {
-      'NO': '5',
-      'Nama': 'Lalu Nicholas',
-      'NIM': '3202216007',
-      'Kelas': 'C',
-      'Semester': '4',
-      'Angkatan': '22',
-      'Tahun': '2023-2024',
-      'Total': '40',
-    },
-  ];
-
+  List<Map<String, String>> data = [];
   List<Map<String, String>> filteredData = [];
 
   @override
   void initState() {
     super.initState();
-    // Tampilkan semua data terlebih dahulu
-    filteredData = dataMahasiswa;
+    fetchData(); // Panggil fetchData di sini
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final response =
+          await http.get(Uri.parse('http://127.0.0.1:8000/api/Laporan-cicil'));
+
+      if (response.statusCode == 200) {
+        print('Response body: ${response.body}'); // Log respons body
+        final Map<String, dynamic> jsonData = json.decode(response.body);
+
+        if (jsonData.containsKey('LaporanCicil')) {
+          final List<dynamic> items = jsonData['LaporanCicil'];
+
+          List<Map<String, String>> fetchedData = items.map((item) {
+            return {
+              'NO': item['id_mahasiswa']?.toString() ?? '',
+              'Nama': item['Nama_Mahasiswa']?.toString() ?? '',
+              'NIM': item['NIM']?.toString() ?? '',
+              'Kelas': item['Kelas']?.toString() ?? '',
+              'Semester': item['Semester']?.toString() ?? '',
+              'Angkatan': item['angkatan']?.toString() ?? '',
+              'Tahun': item['Tahun']?.toString() ?? '',
+              'Total': item['totalKompen']?.toString() ?? '',
+            };
+          }).toList();
+
+          setState(() {
+            data = fetchedData;
+            filteredData = fetchedData;
+          });
+        } else {
+          throw Exception('Key "LaporanCicil" not found in response');
+        }
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void filterData() {
     setState(() {
-      filteredData = dataMahasiswa.where((data) {
-        bool matchTahun = selectedTahun == '-' || data['Tahun'] == selectedTahun;
-        bool matchKelas = selectedKelas == '-' || data['Kelas'] == selectedKelas;
-        bool matchAngkatan = selectedAngkatan == '-' || data['Angkatan'] == selectedAngkatan;
-        bool matchSemester = selectedSemester == '-' || data['Semester'] == selectedSemester;
-        bool matchSearch = searchController.text.isEmpty || data['Nama']!.toLowerCase().contains(searchController.text.toLowerCase()) || data['NIM']!.toLowerCase().contains(searchController.text.toLowerCase());
+      filteredData = data.where((item) {
+        bool matchTahun =
+            selectedTahun == '-' || item['Tahun'] == selectedTahun;
+        bool matchKelas =
+            selectedKelas == '-' || item['Kelas'] == selectedKelas;
+        bool matchAngkatan =
+            selectedAngkatan == '-' || item['Angkatan'] == selectedAngkatan;
+        bool matchSemester =
+            selectedSemester == '-' || item['Semester'] == selectedSemester;
+        bool matchSearch = searchController.text.isEmpty ||
+            item['Nama']!
+                .toLowerCase()
+                .contains(searchController.text.toLowerCase()) ||
+            item['NIM']!
+                .toLowerCase()
+                .contains(searchController.text.toLowerCase());
 
-        return matchTahun && matchKelas && matchAngkatan && matchSemester && matchSearch;
+        return matchTahun &&
+            matchKelas &&
+            matchAngkatan &&
+            matchSemester &&
+            matchSearch;
       }).toList();
     });
   }
@@ -108,65 +111,6 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
           ),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.yellow,
-                        child: Text('SP1'),
-                      ),
-                      SizedBox(width: 10),
-                      Text('2')
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.orange,
-                        child: Text('SP2'),
-                      ),
-                      SizedBox(width: 10),
-                      Text('3')
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.red,
-                        child: Text('SP3'),
-                      ),
-                      SizedBox(width: 10),
-                      Text('2')
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 250,
-                    width: 1000,
-                    color: Colors.grey.shade200,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 30),
-          Row(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +118,7 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                   const Text('Tahun'),
                   DropdownButton<String>(
                     value: selectedTahun,
-                    items: <String>['-', '2023-2024', '2022-2023', '2021-2022']
+                    items: <String>['-', '2023', '2022', '2021']
                         .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -197,7 +141,8 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                   const Text('Kelas'),
                   DropdownButton<String>(
                     value: selectedKelas,
-                    items: <String>['-', 'A', 'B', 'C'].map((String value) {
+                    items: <String>['-', 'A', 'B', 'C', 'D', 'E']
+                        .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -241,7 +186,8 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                   const Text('Semester'),
                   DropdownButton<String>(
                     value: selectedSemester,
-                    items: <String>['-', '1', '2', '3', '4'].map((String value) {
+                    items:
+                        <String>['-', '1', '2', '3', '4'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -291,17 +237,17 @@ class _LaporanKompensasiState extends State<LaporanKompensasi> {
                       DataColumn(label: Text('Tahun')),
                       DataColumn(label: Text('Total')),
                     ],
-                    rows: filteredData.map((data) {
+                    rows: filteredData.map((item) {
                       return DataRow(
                         cells: <DataCell>[
-                          DataCell(Text(data['NO']!)),
-                          DataCell(Text(data['Nama']!)),
-                          DataCell(Text(data['NIM']!)),
-                          DataCell(Text(data['Kelas']!)),
-                          DataCell(Text(data['Semester']!)),
-                          DataCell(Text(data['Angkatan']!)),
-                          DataCell(Text(data['Tahun']!)),
-                          DataCell(Text(data['Total']!)),
+                          DataCell(Text(item['NO']!)),
+                          DataCell(Text(item['Nama']!)),
+                          DataCell(Text(item['NIM']!)),
+                          DataCell(Text(item['Kelas']!)),
+                          DataCell(Text(item['Semester']!)),
+                          DataCell(Text(item['Angkatan']!)),
+                          DataCell(Text(item['Tahun']!)),
+                          DataCell(Text(item['Total']!)),
                         ],
                       );
                     }).toList(),
