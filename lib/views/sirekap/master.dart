@@ -1,5 +1,7 @@
 import 'package:academix_polnep/views/sirekap/views/dashboard.dart';
 import 'package:academix_polnep/views/sirekap/views/surat_peringatan/admin_ti_ori.dart';
+import 'package:academix_polnep/views/sirekap/views/surat_peringatan/dsn_pembimbing.dart';
+import 'package:academix_polnep/views/sirekap/views/surat_peringatan/verif_ori.dart';
 // import 'package:academix_polnep/views/sirekap/views/dashboard/cobe.dart';
 // // import 'package:academix_polnep/views/sirekap/views/dashboard/notifikasi.dart';
 // // import 'package:academix_polnep/views/sirekap/views/dashboard/nt.dart';

@@ -4,16 +4,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class AplikasiSaya extends StatefulWidget {
+class DsnPembimbing extends StatefulWidget {
   final List<Mahasiswa> mahasiswaList;
 
-  AplikasiSaya({required this.mahasiswaList});
+  DsnPembimbing({required this.mahasiswaList});
 
   @override
-  _AplikasiSayaState createState() => _AplikasiSayaState();
+  _DsnPembimbingState createState() => _DsnPembimbingState();
 }
 
-class _AplikasiSayaState extends State<AplikasiSaya> {
+class _DsnPembimbingState extends State<DsnPembimbing> {
   int notificationCount = 0;
 
   final _nimController = TextEditingController();
@@ -92,20 +92,24 @@ class _AplikasiSayaState extends State<AplikasiSaya> {
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF158AD4), Color(0xFF39EADD)],
+                colors: [
+                  Color(0xFF158AD4),
+                  Color(0xFF39EADD),
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(
+                  left: 35, right: 10, top: 10, bottom: 10),
               child: Row(
                 children: [
                   SizedBox(
                     width: 150,
                     height: 50,
-                    child: Image.asset('images/SIREKAP.png',
-                        fit: BoxFit.contain),
+                    child:
+                        Image.asset('images/SIREKAP.png', fit: BoxFit.contain),
                   ),
                   const Spacer(),
                   const Text(
@@ -117,7 +121,8 @@ class _AplikasiSayaState extends State<AplikasiSaya> {
                   const SizedBox(width: 10),
                   CircleAvatar(
                     backgroundColor: Colors.yellow,
-                    child: Text('Admin', style: TextStyle(color: Colors.black)),
+                    child: const Text('Admin',
+                        style: TextStyle(color: Colors.black)),
                   ),
                 ],
               ),
@@ -170,32 +175,6 @@ class _AplikasiSayaState extends State<AplikasiSaya> {
       ),
     );
   }
-    // return MaterialApp(
-    //   home: Scaffold(
-    //     appBar: AppBar(
-    //       title: Text('Berita Acara Mahasiswa'),
-    //       actions: [
-    //         _buildNotificationIcon(),
-    //         SizedBox(width: 16),
-    //       ],
-    //     ),
-    //     body: SingleChildScrollView(
-    //       padding: const EdgeInsets.all(16.0),
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           _buildSearchBar(),
-    //           SizedBox(height: 16),
-    //           _buildDetailsSection(),
-    //           SizedBox(height: 16),
-    //           _buildPublishButton(),
-    //           SizedBox(height: 16),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
-    // }
 
   Widget _buildNotificationIcon() {
     return Stack(
@@ -525,7 +504,7 @@ class Mahasiswa {
 void main() {
   runApp(
     MaterialApp(
-      home: AplikasiSaya(
+      home: DsnPembimbing(
         mahasiswaList: [
           Mahasiswa(
             nama: 'John Doe',

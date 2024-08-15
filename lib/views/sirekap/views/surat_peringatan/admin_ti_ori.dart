@@ -15,6 +15,8 @@ class AdminTiPage extends StatefulWidget {
 class _AdminTiPageState extends State<AdminTiPage> {
   late Future<Map<String, int>> futureSummary;
   late Future<List<DataMhs>> futureUsers;
+  List<DataMhs> filteredUsers = [];
+  TextEditingController searchController = TextEditingController();
 
   String? tahunValue = '2022/2023';
   String? kelasValue = 'A';
@@ -29,6 +31,25 @@ class _AdminTiPageState extends State<AdminTiPage> {
     super.initState();
     futureSummary = widget.apiService.fetchSummary();
     futureUsers = widget.apiService.fetchData();
+    searchController.addListener(_filterData);
+  }
+
+  void dispose() {
+    searchController.removeListener(_filterData);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterData() {
+    final query = searchController.text.toLowerCase();
+    futureUsers.then((users) {
+      setState(() {
+        filteredUsers = users.where((user) {
+          return user.nama.toLowerCase().contains(query) ||
+              user.nim.toLowerCase().contains(query);
+        }).toList();
+      });
+    });
   }
 
   @override
@@ -50,20 +71,24 @@ class _AdminTiPageState extends State<AdminTiPage> {
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF158AD4), Color(0xFF39EADD)],
+                colors: [
+                  Color(0xFF158AD4),
+                  Color(0xFF39EADD),
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(
+                  left: 35, right: 10, top: 10, bottom: 10),
               child: Row(
                 children: [
                   SizedBox(
                     width: 150,
                     height: 50,
-                    child: Image.asset('images/SIREKAP.png',
-                        fit: BoxFit.contain),
+                    child:
+                        Image.asset('images/SIREKAP.png', fit: BoxFit.contain),
                   ),
                   const Spacer(),
                   const Text(
@@ -75,7 +100,8 @@ class _AdminTiPageState extends State<AdminTiPage> {
                   const SizedBox(width: 10),
                   CircleAvatar(
                     backgroundColor: Colors.yellow,
-                    child: Text('Admin', style: TextStyle(color: Colors.black)),
+                    child: const Text('Admin',
+                        style: TextStyle(color: Colors.black)),
                   ),
                 ],
               ),
@@ -375,6 +401,7 @@ class _AdminTiPageState extends State<AdminTiPage> {
 
   Widget buildSearchBox() {
     return TextField(
+      controller: searchController,
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: 'Search',
@@ -399,7 +426,7 @@ class _AdminTiPageState extends State<AdminTiPage> {
     DataColumn _buildDataColumn(String label) {
       return DataColumn(
         label: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 100),
+          constraints: BoxConstraints(maxWidth: 250),
           child: Text(
             label,
             style: columnTextStyle,
@@ -427,27 +454,39 @@ class _AdminTiPageState extends State<AdminTiPage> {
 
     DataCell _buildDetailButtonCell() {
       return DataCell(
-        ElevatedButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Info'),
-                  content: Text('Tombol berhasil ditekan'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Menutup dialog
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          child: Text('Edit'),
+        SizedBox(
+          width: double
+              .infinity, // Ensure the button takes the full width of the cell
+          child: ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Info'),
+                    content: Text('Tombol berhasil ditekan'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Menutup dialog
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue, // Set the button color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8), // Less rounded corners
+              ),
+              padding: EdgeInsets.symmetric(
+                  vertical: 8), // Adjust padding for height
+            ),
+            child: Text('Edit', style: TextStyle(color: Colors.white)),
+          ),
         ),
       );
     }
@@ -473,7 +512,7 @@ class _AdminTiPageState extends State<AdminTiPage> {
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(child: Text('No data available'));
         } else {
-          final users = snapshot.data!;
+          final users = filteredUsers.isNotEmpty ? filteredUsers : snapshot.data!;
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
@@ -520,41 +559,40 @@ class _AdminTiPageState extends State<AdminTiPage> {
     int terverifikasi = 5;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Container for Text Info
-        Container(
-          padding: EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'PROSES: $proses    ',
-                  style: TextStyle(color: Colors.blue, fontSize: 12),
-                ),
-                TextSpan(
-                  text: 'PENGAJUAN: $pengajuan    ',
-                  style: TextStyle(color: Colors.orange, fontSize: 12),
-                ),
-                TextSpan(
-                  text: 'TERVERIFIKASI: $terverifikasi',
-                  style: TextStyle(color: Colors.green, fontSize: 12),
-                ),
-              ],
+        // Container with width based on its content
+        IntrinsicWidth(
+          child: Container(
+            padding: EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'PROSES: $proses    ',
+                    style: TextStyle(color: Colors.blue, fontSize: 12),
+                  ),
+                  TextSpan(
+                    text: 'PENGAJUAN: $pengajuan    ',
+                    style: TextStyle(color: Colors.orange, fontSize: 12),
+                  ),
+                  TextSpan(
+                    text: 'TERVERIFIKASI: $terverifikasi',
+                    style: TextStyle(color: Colors.green, fontSize: 12),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        SizedBox(width: 10), // Adjust the spacing between text info and buttons
-        // Wrap for Buttons to align them horizontally
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          alignment: WrapAlignment.start,
+        SizedBox(width: 10), // Adjust spacing between text info and buttons
+        // Container for Buttons on the right
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             ElevatedButton(
               onPressed: () {
@@ -568,9 +606,76 @@ class _AdminTiPageState extends State<AdminTiPage> {
               ),
               child: Text('Edit Surat', style: TextStyle(color: Colors.white)),
             ),
+            SizedBox(width: 10), // Adjust spacing between buttons
             ElevatedButton(
               onPressed: () {
-                // Implement verification logic
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      title: Text(
+                        'Konfirmasi Verifikasi',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      content: Text(
+                        'Apakah Anda yakin ingin memverifikasi seluruh surat?',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: Text(
+                            'Batal',
+                            style: GoogleFonts.poppins(
+                                color: Colors.red, fontSize: 16),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Close the confirmation dialog
+                            Navigator.of(context).pop();
+
+                            // Show success dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  title: Text(
+                                    'Verifikasi Berhasil',
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  content: Text(
+                                    'Seluruh surat telah berhasil diverifikasi.',
+                                    style: GoogleFonts.poppins(fontSize: 16),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green, // Button color
+                          ),
+                          child: Text(
+                            'Verifikasi',
+                            style: GoogleFonts.poppins(
+                                color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -581,9 +686,76 @@ class _AdminTiPageState extends State<AdminTiPage> {
               child: Text('Verifikasi Surat',
                   style: TextStyle(color: Colors.white)),
             ),
+            SizedBox(width: 10), // Adjust spacing between buttons
             ElevatedButton(
               onPressed: () {
-                // Implement publish logic
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      title: Text(
+                        'Konfirmasi Publikasi',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      content: Text(
+                        'Apakah Anda yakin ingin mempublikasikan seluruh surat peringatan?',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: Text(
+                            'Batal',
+                            style: GoogleFonts.poppins(
+                                color: Colors.red, fontSize: 16),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Close the confirmation dialog
+                            Navigator.of(context).pop();
+
+                            // Show success dialog
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  title: Text(
+                                    'Publikasi Berhasil',
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  content: Text(
+                                    'Seluruh surat peringatan telah berhasil dipublikasikan.',
+                                    style: GoogleFonts.poppins(fontSize: 16),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green, // Button color
+                          ),
+                          child: Text(
+                            'Kirim',
+                            style: GoogleFonts.poppins(
+                                color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 92, 92, 92),
@@ -599,3 +771,5 @@ class _AdminTiPageState extends State<AdminTiPage> {
     );
   }
 }
+
+//Final
